@@ -22,7 +22,7 @@ exports.register= async (req,res)=>{
 
         const  newUser =new users({
           
-                username,email,password,github:"",linkedin:"",profile:""
+                username,email,password
          })
 
          await newUser.save()
