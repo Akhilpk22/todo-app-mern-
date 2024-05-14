@@ -18,8 +18,13 @@ router.post('/user/login',UserController.login)
 router.post('/todo/add',jwtmiddleware,TodoContoller.addTodo)
 
 // getalluser-todo
-router.get('/user/all-projects',jwtmiddleware,TodoContoller.allUsertodo)
+router.get('/user/all-todo',jwtmiddleware,TodoContoller.allUsertodo)
 
+// update
+router.put('/todo/edit/:id',jwtmiddleware,TodoContoller.editTodoController)
+
+// delete
+router.delete('/todo/remove/:id',jwtmiddleware,TodoContoller.deleteTodoController)
 
 
 

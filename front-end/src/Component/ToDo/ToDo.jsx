@@ -3,6 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import Update from "../Update/Update";
 import { addtodoAPI } from "../../Services/allAPI";
 import { usertodoAPI } from "../../Services/allAPI";
+import { deleteTodoAPI } from "../../Services/allAPI";
 
 function ToDo() {
   const [showModal, setShowModal] = useState(false);
@@ -33,25 +34,55 @@ function ToDo() {
       setToken("");
     }
   }, []);
-
+  
   // handle add
+  // const handleAdd = async (e) => {
+  //   e.preventDefault();
+  //   const { todoTitle, todoDescription } = todoDetails;
+  //   if (!todoTitle || !todoDescription) {
+  //     alert("please fill the from !!!!");
+  //   } else {
+  //     const reqBody = new FormData();
+  //     reqBody.append("todoTitle", todoTitle);
+  //     reqBody.append("todoDescription", todoDescription);
+
+  //     if (token) {
+  //       const reqHeader = {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       };
+  //       const result = await addtodoAPI(reqBody, reqHeader);
+
+  //       if (result.status === 200) {
+  //         console.log(result.data);
+  //         handleClose();
+  //         alert("add new todo");
+  //         // setaddProjectResponse(result.data)
+  //       } else {
+  //         console.log(result);
+  //         console.log(result.response.data);
+  //       }
+  //     }
+  //   }
+  // };
   const handleAdd = async (e) => {
     e.preventDefault();
     const { todoTitle, todoDescription } = todoDetails;
     if (!todoTitle || !todoDescription) {
-      alert("please fill the from !!!!");
+      alert("please fill the form!!!");
     } else {
-      const reqBody = new FormData();
-      reqBody.append("todoTitle", todoTitle);
-      reqBody.append("todoDescription", todoDescription);
-
+      const requestBody = {
+        todoTitle,
+        todoDescription
+      };
+  
       if (token) {
         const reqHeader = {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         };
-        const result = await addtodoAPI(reqBody, reqHeader);
-
+        const result = await addtodoAPI(requestBody, reqHeader);
+  
         if (result.status === 200) {
           console.log(result.data);
           handleClose();
@@ -64,6 +95,7 @@ function ToDo() {
       }
     }
   };
+  
 
   // login username
   const [username, setusername] = useState("");
@@ -93,6 +125,30 @@ function ToDo() {
   useEffect(() => {
     getUsertodo();
   }, [usertodo]);
+
+
+
+  // get user delete
+  //  delete
+  const handleDelete = async (id) => {
+    const token = sessionStorage.getItem("token");
+
+
+    const reHeader = {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    };
+
+    const result = await deleteTodoAPI(id,reHeader)
+    if(result.status===200){
+      // page reload
+      getUsertodo();
+      alert("Are you sure want to delete this item..?")
+
+    }else{
+      alert(result.response.data)
+    }
+  };
 
   return (
     <div className="main-container  d-flex flex-column justify-content-center align-items-center">
@@ -167,34 +223,35 @@ function ToDo() {
       </Modal>
       {/* 1 */}
       {/* User Todos */}
-    <div className="todo-container rounded shadow p-5 w-100 w-md-75 w-lg-50">
-    {usertodo && usertodo.length > 0 ? (
-      usertodo.map((todo, index) => (
-        <div className="todo-item-container mb-3 p-3 shadow-lg" key={index}>
-          <div className="row align-items-center">
-            <div className="col-12 col-md-8">
-              <div>
-                <h2>{todo.todoTitle}</h2>
-                <p className="text">{todo.todoDescription}</p>
-              </div>
+      <div className="todo-container rounded shadow p-5 w-100 w-md-75 w-lg-50">
+  {usertodo && usertodo.length > 0 ? (
+    usertodo.slice().reverse().map((todo, index) => (
+      <div className="todo-item-container mb-3 p-3 shadow-lg" key={index}>
+        <div className="row align-items-center">
+          <div className="col-12 col-md-8">
+            <div>
+              <h2>{todo.todoTitle}</h2>
+              <p className="text">{todo.todoDescription}</p>
             </div>
-            <div className="col-12 col-md-4">
-              <div className="d-flex justify-content-end">
-                <div className="btn-group" role="group" aria-label="Todo Actions">
-                  <Update />
-                  <button type="button" className="btn btn-danger">
-                    Delete
-                  </button>
-                </div>
+          </div>
+          <div className="col-12 col-md-4">
+            <div className="d-flex justify-content-end">
+              <div className="btn-group" role="group" aria-label="Todo Actions">
+                <Update todo={todo}/>
+                <button type="button" onClick={() => handleDelete(todo._id)} className="btn btn-danger">
+                  Delete
+                </button>
               </div>
             </div>
           </div>
         </div>
-      ))
-    ) : (
-      <p className="text-danger fw-bolder fs-5 mt-3">No Todos Uploaded Yet!!!</p>
-    )}
-  </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-danger fw-bolder fs-5 mt-3">No Todos Uploaded Yet!!!</p>
+  )}
+</div>
+
    
     </div>
   );
