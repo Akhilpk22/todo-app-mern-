@@ -36,35 +36,7 @@ function ToDo() {
   }, []);
   
   // handle add
-  // const handleAdd = async (e) => {
-  //   e.preventDefault();
-  //   const { todoTitle, todoDescription } = todoDetails;
-  //   if (!todoTitle || !todoDescription) {
-  //     alert("please fill the from !!!!");
-  //   } else {
-  //     const reqBody = new FormData();
-  //     reqBody.append("todoTitle", todoTitle);
-  //     reqBody.append("todoDescription", todoDescription);
-
-  //     if (token) {
-  //       const reqHeader = {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       };
-  //       const result = await addtodoAPI(reqBody, reqHeader);
-
-  //       if (result.status === 200) {
-  //         console.log(result.data);
-  //         handleClose();
-  //         alert("add new todo");
-  //         // setaddProjectResponse(result.data)
-  //       } else {
-  //         console.log(result);
-  //         console.log(result.response.data);
-  //       }
-  //     }
-  //   }
-  // };
+  
   const handleAdd = async (e) => {
     e.preventDefault();
     const { todoTitle, todoDescription } = todoDetails;
@@ -87,7 +59,7 @@ function ToDo() {
           console.log(result.data);
           handleClose();
           alert("add new todo");
-          // setaddProjectResponse(result.data)
+          
         } else {
           console.log(result);
           console.log(result.response.data);
@@ -129,7 +101,7 @@ function ToDo() {
 
 
   // get user delete
-  //  delete
+  //  delete function
   const handleDelete = async (id) => {
     const token = sessionStorage.getItem("token");
 
@@ -141,7 +113,7 @@ function ToDo() {
 
     const result = await deleteTodoAPI(id,reHeader)
     if(result.status===200){
-      // page reload
+     
       getUsertodo();
       alert("Are you sure want to delete this item..?")
 
@@ -152,11 +124,11 @@ function ToDo() {
 
   return (
     <div className="main-container  d-flex flex-column justify-content-center align-items-center">
-      <h1>Todo App</h1>
+      <h1 className="text-bg-light fw-bolder ">Todo App</h1>
       <div className="text-start mt-3">
-        <span className="fw-bolder fs-5">{username}</span>
+    <span className="fw-bolder fs-5 shadow ">Name: {username}</span>
       </div>
-      <div className="todo-container w-50 rounded shadow p-1 ">
+      <div className="todo-container w-50 rounded shadow p-1 mt-3 ">
         <div className="d-flex align-items-center justify-content-center ">
           <h2 className="p-2">What’s On Your List?</h2>
         </div>

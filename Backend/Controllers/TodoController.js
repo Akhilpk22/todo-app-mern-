@@ -1,14 +1,14 @@
 const Todos = require('../models/TodoSchema')
 
-// addprojects 
+// addtodo 
 
 exports.addTodo = async(req,res)=>{
 
     console.log("inside add Toso  function");
     const userId =req.payload
-    // const projectImage = req.file.filename
+    
     const {todoTitle,todoDescription}= req.body
-    // console.log(`${title},${languages},${overview},${github},${website},${projectImage},${userId}`);
+    
 
     try{
         const existingTodo = await Todos.findOne({todoDescription})
@@ -32,7 +32,7 @@ exports.addTodo = async(req,res)=>{
     
 }
 
-// getuserprojects -token required
+// getusertodo -token required
 exports.allUsertodo = async (req,res)=>{
     const userId=req.payload
     try{
@@ -45,16 +45,12 @@ exports.allUsertodo = async (req,res)=>{
 }
 
 exports.editTodoController = async (req,res)=>{
-    // get edit projects details 
+    // get edit todo details 
     const {id}= req.params
     
     const userId =req.payload
 
     const {todoTitle,todoDescription}= req.body
-
-    // const uploadprojectImage= req.file?req.file.filename:projectImage
-
-
     try{
         // this code  is update method is findByIdAndUpdate  passing _id
         const updateTodo= await Todos.findByIdAndUpdate({_id:id},{
@@ -71,7 +67,7 @@ exports.editTodoController = async (req,res)=>{
 
 // delete
 exports.deleteTodoController = async(req,res)=>{
-    // get all projects
+    // get all todo
     const {id}= req.params
     try{
         // response 

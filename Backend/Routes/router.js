@@ -14,7 +14,7 @@ router.post('/user/register',UserController.register)
 // login
 router.post('/user/login',UserController.login)
 
-// add-projects
+// add-todo
 router.post('/todo/add',jwtmiddleware,TodoContoller.addTodo)
 
 // getalluser-todo
