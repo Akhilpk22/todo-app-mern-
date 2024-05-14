@@ -3,7 +3,8 @@ const express = require('express')
 
 const router = new  express.Router()
 const UserController =require('../Controllers/UserController')
-
+const jwtmiddleware = require('../middlewares/jwtmiddlewares')
+const TodoContoller = require('../Controllers/TodoController')
 
 
 
@@ -12,6 +13,14 @@ router.post('/user/register',UserController.register)
 
 // login
 router.post('/user/login',UserController.login)
+
+// add-projects
+router.post('/todo/add',jwtmiddleware,TodoContoller.addTodo)
+
+// getalluser-todo
+router.get('/user/all-projects',jwtmiddleware,TodoContoller.allUsertodo)
+
+
 
 
 

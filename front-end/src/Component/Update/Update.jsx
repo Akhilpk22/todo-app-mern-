@@ -3,19 +3,12 @@ import { Button, Modal } from 'react-bootstrap';
 
 function Update() {
     const [showModal, setShowModal] = useState(false);
-    const [todoTitle, setTodoTitle] = useState('');
-    const [todoDescription, setTodoDescription] = useState('');
+   
 
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
 
-    const handleSaveTodo = () => {
-        // Implement your save logic here
-        // For example:
-        // console.log('Todo Title:', todoTitle);
-        // console.log('Todo Description:', todoDescription);
-        handleClose();
-    };
+    
 
     return (
         <>
@@ -55,7 +48,7 @@ function Update() {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button> 
-                    <Button variant="primary" onClick={handleSaveTodo}>
+                    <Button variant="primary" >
                         Update
                     </Button>
                 </Modal.Footer>
